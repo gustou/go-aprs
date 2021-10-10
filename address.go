@@ -34,10 +34,10 @@ func (a Address) CallPass() int16 {
 }
 
 func parseAddresses(addrs []string) []Address {
-	var rv []Address
+	rv := make([]Address, len(addrs))
 
-	for _, s := range addrs {
-		rv = append(rv, AddressFromString(s))
+	for i, addr := range addrs {
+		rv[i] = AddressFromString(addr)
 	}
 
 	return rv
@@ -45,7 +45,7 @@ func parseAddresses(addrs []string) []Address {
 
 // AddressFromString builds an Addrss object from a string.
 func AddressFromString(s string) Address {
-	parts := strings.Split(s, "-")
+	parts := strings.SplitN(s, "-", 2)
 	rv := Address{Call: parts[0]}
 	if len(parts) > 1 {
 		rv.SSID = parts[1]

@@ -69,24 +69,6 @@ func TestAddressConversion(t *testing.T) {
 	}
 }
 
-func TestCallPass(t *testing.T) {
-	testaddrs := []struct {
-		Call Address
-		Exp  int16
-	}{
-		{AddressFromString("KG6HWF-9"), 22955},
-		{AddressFromString("KG6HWF"), 22955},
-		{AddressFromString("KE6AFE-13"), 18595},
-		{AddressFromString("K6MGD"), 12691},
-	}
-
-	for _, c := range testaddrs {
-		if c.Call.CallPass() != c.Exp {
-			t.Errorf("Expected %v for %v, got %v", c.Exp, c.Call, c.Call.CallPass())
-		}
-	}
-}
-
 func TestAPRS(t *testing.T) {
 	v := ParseFrame(christmasMsg)
 	assert(t, "Source", v.Source.String(), "KG6HWF")
