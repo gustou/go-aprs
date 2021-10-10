@@ -74,8 +74,12 @@ func TestInvalidPosition(t *testing.T) {
 	}
 	for i, testFrame := range testBodies {
 		t.Run(fmt.Sprintf("InvalidPosition[%d]", i), func(t *testing.T) {
-			parsedFrame := ParseFrame("SOURCE>DESTINATION,PATH:" + testFrame)
-			_, err := parsedFrame.Body.Position()
+			parsedFrame, err := ParseFrame("SOURCE>DESTINATION,PATH:" + testFrame)
+			if err != nil {
+				t.Fatalf("Couldn't parse %v as a message: %v", MESSAGE, err)
+			}
+
+			_, err = parsedFrame.Body.Position()
 			if err == nil {
 				t.Fatalf("Parsing %q: expecting any error, go not error", testFrame)
 			}

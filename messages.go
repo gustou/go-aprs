@@ -15,11 +15,11 @@ type Message struct {
 	Parsed    bool
 }
 
-// Message returns the message from an Frame frame.
+// Message returns the message from a Frame frame.
 func (a Frame) Message() Message {
 	// Find source of third party
 	for a.Body.Type().IsThirdParty() && len(a.Body) > 11 {
-		a = ParseFrame(string(a.Body[1:]))
+		a, _ = ParseFrame(string(a.Body[1:]))
 	}
 
 	rv := Message{}

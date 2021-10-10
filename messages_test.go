@@ -12,7 +12,10 @@ const (
 )
 
 func TestMessage(t *testing.T) {
-	v := ParseFrame(MESSAGE)
+	v, err := ParseFrame(MESSAGE)
+	if err != nil {
+		t.Fatalf("Couldn't parse %v as a message: %v", MESSAGE, err)
+	}
 	msg := v.Message()
 
 	if !msg.Parsed {
@@ -33,7 +36,10 @@ func TestMessage(t *testing.T) {
 }
 
 func TestAcked(t *testing.T) {
-	v := ParseFrame(ACKED)
+	v, err := ParseFrame(ACKED)
+	if err != nil {
+		t.Fatalf("Couldn't parse %v as a message: %v", MESSAGE, err)
+	}
 	msg := v.Message()
 
 	if !msg.IsACK() {
@@ -50,7 +56,10 @@ func TestBrokenMessage(t *testing.T) {
 }
 
 func TestThirdParty(t *testing.T) {
-	v := ParseFrame(MESSAGE2)
+	v, err := ParseFrame(MESSAGE2)
+	if err != nil {
+		t.Fatalf("Couldn't parse %v as a message: %v", MESSAGE, err)
+	}
 	if !v.Body.Type().IsThirdParty() {
 		t.Fatalf("This should be third party traffic: %#v", v.Body)
 	}
@@ -74,7 +83,10 @@ func TestThirdParty(t *testing.T) {
 }
 
 func TestBulletin(t *testing.T) {
-	v := ParseFrame(BULLETIN)
+	v, err := ParseFrame(BULLETIN)
+	if err != nil {
+		t.Fatalf("Couldn't parse %v as a message: %v", MESSAGE, err)
+	}
 	if !v.Message().IsBulletin() {
 		t.Fatalf("This should be a bulletin: %#v", v.Body)
 	}
